@@ -1,4 +1,4 @@
-import { glob } from "astro/loaders";
+import { glob, file } from "astro/loaders";
 import { z, defineCollection } from "astro:content";
 const blog = defineCollection({
     loader: glob({ pattern: '*.mdx', base: "./src/posts" }),
@@ -23,4 +23,22 @@ const thoughts = defineCollection({
 });
 
 
-export const collections = { blog, thoughts};
+const events = defineCollection({
+    loader: file("src/data/events.yaml"),
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      image: z.string().optional(),
+      startDate: z.date().optional(),
+      // `ongoing` renders as an open-ended range, e.g. "feb 2026 - ongoing"
+      endDate: z.union([z.date(), z.literal("ongoing")]).optional(),
+      links: z.object({
+        website: z.string().url(),
+        github: z.string().url().optional(),
+        finances: z.string().url().optional(),
+        video: z.string().url().optional(),
+      }),
+    })
+});
+
+export const collections = { blog, thoughts, events };

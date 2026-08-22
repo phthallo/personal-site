@@ -18,12 +18,12 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*/*.{jp
 <div class="relative flex flex-col md:flex-row overflow-auto bg-light-200/40 dark:bg-palette-900 border border-black/20 dark:border-white/20">
     { image ? <Image src = {images[image]()} alt={description} class="w-full md:w-36 min-h-full object-cover" /> : null}
     <div class = "p-4 h-full w-full flex flex-col">
-        <a class="no-underline transition-all duration-300 font-bold" href={url}>{name}</a>
+        <a class="no-underline text-base md:text-lg lg:text-xl 2xl:text-3xl transition-all duration-300 font-bold" href={url}>{name}</a>
         { description && <div class="grow">
             <p>{description}</p>
         </div> }
         <hr/>
-        <div class="bottom-0 mt-auto text-xs sm:text-sm flex flex-row w-full justify-between">
+        <div class="bottom-0 mt-auto text-xs md:text-sm lg:text-base 2xl:text-xl flex flex-row w-full justify-between">
             <span>{date}</span>
             <span>
                 {tags.map(tag => (

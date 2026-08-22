@@ -5,24 +5,14 @@ import PreviewImage from "../components/PreviewImage.astro";
 import Expand from "../components/Expand.astro";
 ---
 
-<Layout title="about">
+<Layout title="a bit about me">
         <p>
-            Hey there, I'm phthallo! I'm 18. I'm originally from Adelaide, Australia and graduated high school in November 2024. I'm currently taking a gap year to help build new things at <a target = "_blank" href="https://hackclub.com/">Hack Club</a>. 
+            Hey there, I'm phthallo! I'm 18, born and raised in Adelaide, Australia. After graduating high school in November 2024, I took a gap year to run technical programs at <a target = "_blank" href="https://hackclub.com/">Hack Club</a> as part of their volunteer gap year fellowship. 
         </p>
-
         <p>
             I'm a tinkerer at heart and have been messing around on the web for as long as I can remember. I grew up online and have made my home here - welcome to my corner of the internet.
         </p>
         <PreviewImage src = "/src/assets/etc/nitw.jpg" altText = "Mae from the video game Night in the Woods standing in a street"></PreviewImage>
-        
-        <h2>things i did</h2>
-
-        <p>Lead organiser for <a target = "_blank" href = "https://game.hackclub.com/">Hack Club: The Game</a>, a scavenger hunt/hacker adventure in Manhattan for 80 teens from 18 countries around the world.</p>
-        <p>Lead organiser and sole developer of <a target="_blank" href = "https://award.athena.hackclub.com/">the Athena Award</a>, a 6 month program ran in collaboration with MIT, Girls Who Code, GitHub, and more. Resulted in hundreds of high school girls worldwide building and shipping over 10 000 verified hours spent on real, technical projects.</p>
-        <p>Presented at <a target = "_blank" href = "https://www.youtube.com/watch?v=xVjlVYFrJj4&t=2607s">PyCon AU in 2024</a>.</p>
-        <p>Moved out at 16.</p>
-        <br/>
-        <p>One day I'll figure out what I actually want to do with my life.</p>
 
         <h2>me</h2>
         
@@ -57,23 +47,26 @@ import Expand from "../components/Expand.astro";
             </Columns>
         </span>    
 
-        <h2>music</h2>
-        <p>10/10 albums, if you want my recommendations :'D
-                    <ul>
-                        <li>Landmark, Demos (mix of both I and II) by Hippo Campus</li>
-                        <li>Clancy by Twenty One Pilots</li>
-                        <li>How To Be a Human Being, Zaba by Glass Animals</li>
-                        <li>Woodstock by Portugal, The Man</li>
-                        <li>Citrona by Flipturn</li>
-                        <li>Persona by half•alive</li>
-                        <li>Tracks of the High Line by Kids That Fly</li>
-                    </ul>
-        </p>
-
         <h2>closing notes</h2>
-        <p>One of my dreams is to travel the world someday, because this earth is a vast and brilliant place and we're only alive for so long. But for now, you can find me in several online spaces.</p>
+        <p>I like travelling without a plan, self-hosting stuff, roadtrips, good music, FOSS, and thoughtful conversations with interesting people.</p>
         <p>If you want to chat, please don't be afraid to get in touch (seriously! I'd love to talk if you're someone interesting, and especially if we have things in common).</p>
         <div>
+
+            <Expand title = "music">
+            <div slot = "content" class="my-4">
+                <p>10/10 albums, if you want my recommendations :'D
+                            <ul>
+                                <li>Landmark, Demos (mix of both I and II) by Hippo Campus</li>
+                                <li>Clancy by Twenty One Pilots</li>
+                                <li>How To Be a Human Being, Zaba by Glass Animals</li>
+                                <li>Woodstock by Portugal, The Man</li>
+                                <li>Citrona by Flipturn</li>
+                                <li>Persona by half•alive</li>
+                                <li>Tracks of the High Line by Kids That Fly</li>
+                            </ul>
+                </p>
+            </div>  
+            </Expand>
             <Expand title = "webrings and buttons!">
             <div slot = "content">
                     <p class = "mt-0"><a href = "https://webring.phthallo.com">placeholder</a></p>
@@ -81,5 +74,6 @@ import Expand from "../components/Expand.astro";
                     <p>go check them out :)</p>   
                 </div>
             </Expand>
+
         </div>
 </Layout>

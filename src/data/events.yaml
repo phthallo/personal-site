@@ -1,0 +1,45 @@
+- id: horizons
+  title: "Horizons"
+  image: arcana.jpg
+  description: |
+    Horizons was a set of 6 hackathons ran on 6 different countries across the Northern Hemisphere's summer - by local teen organisers for teens all around the world. 5000+ online users spent more than 16 000 hours building and shipping technical projects to earn prizes and to come to the hackathons.
+    
+    We brought ~375 teenagers from 43 countries to San Francisco, Sydney, Berlin, Singapore, Toronto and Cairo to spend a weekend building and exploring new cities with other technical teenagers (with travel stipends available)!
+  
+    (picture from Horizons Arcana in Singapore, which I helped staff)
+  startDate: 2026-02-22
+  endDate: ongoing
+  links:
+    website: https://horizons.hackclub.com
+    github: https://github.com/hackclub/horizons
+    finances: https://hcb.hackclub.com/horizons
+
+
+- id: hctg
+  title: "Hack Club: The Game"
+  image: hctg.jpg
+  description: |
+    Hack Club: The Game (HCTG) was an 80-person, 3-day scavenger hunt in Manhattan, NYC inspired by Jet Lag: The Game. Teens spent 9,500 hours on technical open source projects to qualify for the event, with attendees flying out from 18 different countries to compete to claim Manhattan.
+    
+    I was a lead organiser, handling logistics & operations, culminating in the IRL event on May 22nd, 2026 (that's me in the bottom left holding all the cash :) 
+  startDate: 2026-02-01
+  endDate: 2026-05-22
+  links:
+    website: https://game.hackclub.com
+    github: https://github.com/hackclub/the-game
+    finances: https://hcb.hackclub.com/ysws-hctg
+
+- id: athena-award
+  title: "Athena Award"
+  image: parthenon.jpg
+  description: |
+      The Athena Award was a six-month long online event and technical certification for girls in tech, resulting in Parthenon, a 120+ person hackathon in New York City. I was the main developer - running this event in collaboration with MIT, GitHub, GirlsWhoCode and more - and we gave away tens of thousands of dollars in prizes and distributed ~200 certifications to qualified teens!
+
+      (picture is from Parthenon, organised by my friend Reem and a team of teen coders from around the world!)
+  startDate: 2025-01-17
+  endDate: 2025-12-31
+  links:
+    website: https://award.athena.hackclub.com
+    github: https://github.com/hackclub/athena-award
+    finances: https://hcb.hackclub.com/athena-initiative
+    video: https://youtu.be/7K_E7tG-O68

@@ -1,8 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Columns from "@/components/Columns.astro";
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 
-const projectBlacklist = ["gallery", "phthallo", "ascend-website"]
+const projectBlacklist = ["gallery", "phthallo", "ascend-website", "ao3downloader"]
 const response = await fetch("https://api.github.com/users/phthallo/repos?per_page=50", 
 	{ headers: {
 			"Accept": "application/vnd.github+json",
@@ -19,20 +21,68 @@ if (response.length > 0 ){
 		else if (a.stargazers_count < b.stargazers_count) return 1
 		return 0
 		})
+	projects = projects.slice(0, 8)
 	} else {
 		projects = []
 	}
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*.{jpeg,jpg,png,gif}')
+const eventImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/events/*.{jpeg,jpg,png,gif,webp}')
+
+const events = (await getCollection('events')).sort((a, b) =>
+	(b.data.startDate?.getTime() ?? 0) - (a.data.startDate?.getTime() ?? 0)
+)
+
+const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+const dateRange = (start?: Date, end?: Date | 'ongoing') => {
+	if (!start && !end) return ''
+	if (end === 'ongoing') return start ? `${formatDate(start)} \u2013 ongoing` : 'ongoing'
+	if (!start) return formatDate(end!)
+	if (!end) return formatDate(start)
+	return formatDate(start) === formatDate(end) ? formatDate(start) : `${formatDate(start)} \u2013 ${formatDate(end)}`
+}
 ---
 
 <Layout title="projects">
+	{events.length > 0 && (
+	<div class = "flex flex-col gap-4 mb-8">
+		<h2 class = "font-bold m-0">events</h2>
+		{events.map((event) => (
+		<div class="relative flex flex-col overflow-auto bg-light-200/40 dark:bg-palette-900 border border-palette-900/70 dark:border-palette-800/70">
+			{event.data.image && eventImages["/src/assets/events/" + event.data.image] ? <Image src = {eventImages["/src/assets/events/" + event.data.image]()} alt={event.data.title} class="w-full h-64 md:h-96 object-cover border-x-0 border-t-0" /> : ""}
+			<div class = "p-4 h-full flex flex-col">
+				<a class="no-underline text-base md:text-lg lg:text-xl 2xl:text-3xl transition-all duration-300 font-bold hover:bg-transparent group flex flex-row justify-between gap-2" href = {event.data.links.website}>
+					{event.data.title}
+					{dateRange(event.data.startDate, event.data.endDate) && (
+						<span class = "text-xs md:text-sm lg:text-base 2xl:text-xl font-normal whitespace-nowrap group-hover:text-palette-900 transition-all duration-300">{dateRange(event.data.startDate, event.data.endDate)}</span>
+					)}
+				</a>
+				<div class="grow">
+					<p class = "whitespace-pre-line">{event.data.description}</p>
+				</div>
+
+				<div class = "flex flex-row flex-wrap justify-between items-center gap-2">
+					<span class = "flex flex-row flex-wrap items-center gap-2">
+						<a class = "icon p-2 border dark:border-white/20 border-black/20" href={event.data.links.website} aria-label={`Visit the website for ${event.data.title}`}>website</a>
+						{event.data.links.finances && <a target="_blank" class = "icon p-2 border dark:border-white/20 border-black/20" href={event.data.links.finances} aria-label={`View the finances for ${event.data.title}`}>finances</a>}
+						{event.data.links.video && <a target="_blank" class = "icon p-2 border dark:border-white/20 border-black/20" href={event.data.links.video} aria-label={`Watch the video for ${event.data.title}`}>video</a>}
+					</span>
+					{event.data.links.github && <a target="_blank" class = "icon p-2 border dark:border-white/20 border-black/20" href={event.data.links.github} aria-label={`Visit the source code for ${event.data.title}`}><i class="github mr-2"></i>view source</a>}
+				</div>
+			</div>
+		</div>
+		))}
+	</div>
+	)}
+
 	<div class = "flex flex-col gap-4">
+		<h2 class = "font-bold m-0">personal projects</h2>
+		<Columns>
 			{projects.length > 0 ? projects.map((project) => (
 			<div class="relative flex flex-col overflow-auto bg-light-200/40 dark:bg-palette-900 border border-palette-900/70 dark:border-palette-800/70">
 				{images["/src/assets/projects/" + project.name.toLowerCase() + ".jpg"] ? <Image src = {images["/src/assets/projects/" + project.name.toLowerCase() + ".jpg"]()} alt={project.description} class="w-full h-36 object-cover border-x-0 border-t-0" /> : ""}
 				<div class = "p-4 h-full flex flex-col">
-					<a class="no-underline text-sm sm:text-base transition-all duration-300 font-bold hover:bg-transparent group flex flex-row justify-between" href = {`${project.homepage ? project.homepage : project.html_url}`}>
+					<a class="no-underline text-base md:text-lg lg:text-xl 2xl:text-3xl transition-all duration-300 font-bold hover:bg-transparent group flex flex-row justify-between" href = {`${project.homepage ? project.homepage : project.html_url}`}>
 						{project.name} 
 						<span class = "flex flex-row gap-2 items-center group-hover:text-palette-900 transition-all duration-300">
 							{project.stargazers_count}
@@ -46,16 +96,17 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/project
 					</div>
 
 					<div class = "flex flex-row justify-between items-center">
-						<span class="text-sm w-max sm:text-base transition-all duration-300 my-1 ml-0 mr-2 flex max-h-8  bg-light-200 text-palette-900 dark:bg-palette-600 p-1 dark:text-palette-900 font-bold flex-row items-center gap-1">
+						<span class="text-sm w-max md:text-base lg:text-lg 2xl:text-2xl transition-all duration-300 my-1 ml-0 mr-2 flex max-h-8  bg-light-200 text-palette-900 dark:bg-palette-600 p-1 dark:text-palette-900 font-bold flex-row items-center gap-1">
 							<i class={project.language.toLowerCase()}/>{project.language}
 						</span>
-						<a class = "icon float-left p-2  border dark:border-white/20 border-black/20 " href={project.html_url} aria-label={`Visit the GitHub repository for ${project.name}`}><i class="github mr-2"></i>view source</a>
+						<a target="_blank" class = "icon float-left p-2  border dark:border-white/20 border-black/20 " href={project.html_url} aria-label={`Visit the GitHub repository for ${project.name}`}><i class="github mr-2"></i>view source</a>
 				</div>
 				</div>
 			</div>
 			)) 
 		: <div class = "text-center">no projects loaded</div>}
+		</Columns>
 
 
-	<p>you may also wish to view my occassional contributions to <a href = "https://github.com/pulls?q=is%3Apr+author%3Aphthallo+archived%3Afalse+">other open-source repositories</a>.</p>
+	<p>also check out <a href = "https://github.com/phthallo" target="_blank">my other projects</a> and <a href = "https://github.com/pulls?q=is%3Apr+author%3Aphthallo+archived%3Afalse+">open source contributions</a></p>
 </Layout>

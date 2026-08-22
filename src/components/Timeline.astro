@@ -6,7 +6,7 @@ const { timeline } = Astro.props;
     {timeline.map((data => 
         <li class="mb-10 ms-4">
             <div class="absolute w-3 h-3  mt-1.5 -start-1.5 border border-palette-900 bg-light-100 dark:border-light-100 dark:bg-palette-900"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-light-50 dark:text-palette-300">{data.date}</time>
+            <time class="mb-1 text-xs md:text-sm lg:text-base 2xl:text-xl font-normal leading-none text-light-50 dark:text-palette-300">{data.date}</time>
             <h3 class="font-semibold text-gray-900 dark:text-white">{data.title}</h3>
             <p class="mb-4 font-normal text-gray-500 dark:text-gray-400">{data.desc}</p>
         </li>
